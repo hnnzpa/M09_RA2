@@ -6,62 +6,46 @@ public class Motor extends Thread {
     }
 
     private int potencia_actual = 0;
-    private int potencia_objectiu;
+    private int potencia_objectiu = 0;
 
     public void setPotencia(int p) {
         this.potencia_objectiu = p;
+    }
 
+    private void dorm() {
+        try {
+            sleep((Math.random() < 0.5) ? 1000 : 2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void run() {
-        do {
-
-            while (potencia_actual != potencia_objectiu) {
-                System.out.println("Entrando en elwhile 2");
+        boolean faRes = false;
+        while (!(potencia_actual == 0 && potencia_objectiu == 0)) {
+            String msg;
+            do {
                 if (potencia_objectiu > potencia_actual) {
-                    System.out.printf("Motor %s: Incre. Objectiu: %d Actual: %d\n",
-                            getName(), potencia_objectiu, potencia_actual);
-                    int dorm = (Math.random() < 0.5) ? 1000 : 2000;
-                    try {
-                        sleep(dorm);
-                        potencia_actual++;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    msg = "Incre.";
+                    potencia_actual++;
+                    faRes = false;
                 } else if (potencia_objectiu < potencia_actual) {
-                    System.out.printf("Motor %s: Decre. Objectiu: %d Actual: %d\n",
-                            getName(), potencia_objectiu, potencia_actual);
-                    int dorm = (Math.random() < 0.5) ? 1000 : 2000;
-                    try {
-                        sleep(dorm);
-                        potencia_actual--;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    msg = "Decre.";
+                    potencia_actual--;
+                    faRes = false;
                 } else {
-                    System.out.printf("Motor %s: FerRes. Objectiu: %d Actual: %d\n", 
-                                getName(), this.potencia_objectiu, this.potencia_actual);
-
-                    try {
-                        sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (potencia_objectiu == 0){
-                        break;
-                    }
+                    msg = "FerRes.";
+                    dorm();
+                    if (faRes)
+                        continue;
+                    faRes = true;
                 }
-            }
-
-        System.out.printf("Motor %s apagado\n", getName());
-
-        }while (potencia_actual != 0);
-
-        System.out.println("Final de run");
+                dorm();
+                System.out.printf("Motor %s: %s Objectiu: %d Actual: %d\n", getName(), msg, potencia_objectiu,
+                        potencia_actual);
+            } while (!(potencia_actual == potencia_objectiu));
+        }
     }
 
 }

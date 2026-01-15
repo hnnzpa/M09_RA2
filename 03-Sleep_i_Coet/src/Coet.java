@@ -27,12 +27,14 @@ public class Coet {
     public static void main(String[] args) {
 
         Coet coet = new Coet();
-        coet.arranca();
 
         Scanner scanner = new Scanner(System.in);
-        
+        int n = scanner.nextInt();
+        coet.passaAPotencia(n);
+        coet.arranca();
+
         while (true){
-            int n = scanner.nextInt();
+            n = scanner.nextInt();
 
             coet.passaAPotencia(n);
             System.out.printf("Passant a potència %d\n", n);
@@ -40,8 +42,6 @@ public class Coet {
                 break;
             }
         }
-
-        System.out.println("Termina main");
         scanner.close();
     }
 
