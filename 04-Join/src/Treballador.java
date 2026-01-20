@@ -7,8 +7,8 @@ public class Treballador extends Thread{
     private int edat_actual; 
     private float cobrat;
     private Random rnd;
-    private int cobra;
-    private int pagaImpostos; 
+    private float cobra;
+    private float pagaImpostos; 
 
     public int getEdat() {
         return edat_actual;
@@ -25,11 +25,29 @@ public class Treballador extends Thread{
         this.edat_fi_treball = fi_treball;
         edat_actual = 0; 
         cobrat = 0.0f;
+        cobra = sou_anual_brut/12.0f;
+    }
 
+    public void cobra(){
+        cobrat += cobra;
+    }
+
+    public void pagaImpostos(){
+        float impostos = cobra*0.24f;
+        pagaImpostos += impostos;
+        cobrat -= impostos;
     }
 
     @Override
     public void run(){
-        
+        for (edat_actual = edat_inici_treball; edat_actual < edat_fi_treball; edat_actual ++){
+            for (int mes = 0; mes < 12; mes++) {
+                cobra();
+                pagaImpostos();
+                
+            }
+        }
+
+
     }
 }
