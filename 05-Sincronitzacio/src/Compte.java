@@ -12,6 +12,17 @@ public class Compte {
         return instancia;
     }
 
+    public synchronized void ingresar(float quantitat) {
+        quantitat += saldo;
+        this.setSaldo(quantitat);
+    }
+
+    public synchronized void retirar(float quantitat) {
+        quantitat = saldo - quantitat;
+        this.setSaldo(quantitat);
+    }
+
+
     public synchronized float getSaldo() {
         return saldo;
     }

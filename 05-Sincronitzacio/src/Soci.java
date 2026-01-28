@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Soci extends Thread {
     private Compte compte;
-    private float aportacio = 10f;
+    private float aportacio = 10.0f;
     private int espera_max = 100;
     private Random random;
     private int maxAnys = 10;
@@ -15,17 +15,8 @@ public class Soci extends Thread {
         compte = Compte.getInstance();
     }
 
-    public synchronized void ingresar(float quantitat) {
-        quantitat += compte.getSaldo();
-        compte.setSaldo(quantitat);
-    }
-
-    public synchronized void retirar(float quantitat) {
-        quantitat = compte.getSaldo() - quantitat;
-        compte.setSaldo(quantitat);
-    }
-
     public void dormir() {
+        random = new Random();
         int temp = random.nextInt(espera_max) + 1;
         try {
             sleep(temp);
@@ -39,10 +30,10 @@ public class Soci extends Thread {
         while (anys < maxAnys) {
             for (int i = 1; i < 13; i++) {
                 if (i % 2 == 0) { // parell
-                    ingresar(aportacio);
+                    compte.ingresar(aportacio);
                     dormir();
                 } else { // senar
-                    retirar(aportacio);
+                    compte.retirar(aportacio);
                     dormir();
                 }
             }
