@@ -24,6 +24,7 @@ public class Esdeveniment {
         if (reservat(assistent)) {
             assistents.remove(assistent);
             placesDisp++;
+            notifyAll();
             System.out.printf("%s ha cancel·lat una reserva. Places disponibles: %d\n", assistent.getName(),
                     placesDisp);
         } else {
