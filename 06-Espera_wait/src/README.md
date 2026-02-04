@@ -7,166 +7,113 @@
 
 2. Què pasa si es canvia la probabilitat de ferReserva i cancel·laReserva?
     - 70% fer Reserva / 30 cancel·la Reserva:
-    '''
-    public boolean ferAlgo(double probabilitat) {
-        return random.nextDouble() > probabilitat;
-    }
+    
+    Tros de codi modificat: 
 
-    private double chance = 0.3;
-    public void run() {
-        while (true) {
-            if (ferAlgo(chance)) { // si es mes de 70%
-                try {
-                    esdeveniment.ferReserva(this);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else { // si es menys de 30%
-                esdeveniment.cancelaReserva(this);
-            }
-            dormir();
+        '''
+        public boolean ferAlgo(double probabilitat) {
+            return random.nextDouble() > probabilitat;
         }
-    }
-    '''
-    Resultat: 
-    '''
-    Assistent-0 ha fet una reserva. Places disponibles: 4
-    Assistent-9 ha fet una reserva. Places disponibles: 3       
-    Assistent-8 ha fet una reserva. Places disponibles: 2       
-    Assistent-6 ha fet una reserva. Places disponibles: 1       
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
-    Assistent-5 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
-    Assistent-4 ha fet una reserva. Places disponibles: 0       
-    Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-7 ha fet una reserva. Places disponibles: 0       
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-7 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-8 ha fet una reserva. Places disponibles: 0  
-    '''
 
-La diferència es que ara faran reserves amb més probabilitat per tant les places que es cancelaran serán molt poques i per tant el flux es trencara més ràpid. Nungú "voldra" cancel·la.
+        private double chance = 0.3;
+        public void run() {
+            while (true) {
+                if (ferAlgo(chance)) { // si es mes de 70%
+                    try {
+                        esdeveniment.ferReserva(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else { // si es menys de 30%
+                    esdeveniment.cancelaReserva(this);
+                }
+                dormir();
+            }
+        }
+        '''
+        Resultat: 
+        '''
+        Assistent-0 ha fet una reserva. Places disponibles: 4
+        Assistent-9 ha fet una reserva. Places disponibles: 3       
+        Assistent-8 ha fet una reserva. Places disponibles: 2       
+        Assistent-6 ha fet una reserva. Places disponibles: 1       
+        Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
+        Assistent-5 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
+        Assistent-4 ha fet una reserva. Places disponibles: 0       
+        Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-7 ha fet una reserva. Places disponibles: 0       
+        Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-7 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-8 ha fet una reserva. Places disponibles: 0  
+        '''
+
+    La diferència es que ara faran reserves amb més probabilitat per tant les places que es cancelaran serán molt poques i per tant el flux es trencara més ràpid. Nungú "voldra" cancel·la.
 
     - 30% fer Reserva / 70% cancel·la
+
     Tros de codi mofdificat: 
-    '''
-    public boolean ferAlgo(double probabilitat) {
-        return random.nextDouble() > probabilitat;
-    }
 
-    private double chance = 0.7;
-    public void run() {
-        while (true) {
-            if (ferAlgo(chance)) { // si es mes de 70%
-                try {
-                    esdeveniment.ferReserva(this);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else { // si es menys de 30%
-                esdeveniment.cancelaReserva(this);
-            }
-            dormir();
+        '''
+        public boolean ferAlgo(double probabilitat) {
+            return random.nextDouble() > probabilitat;
         }
-    }
-    '''
 
-    Resultat:
-    '''
-    Assistent-0 ha fet una reserva. Places disponibles: 4
-    Assistent-9 no ha pogut cancel·la una reserva inexistent. Places disponibles: 4
-    Assistent-8 ha fet una reserva. Places disponibles: 3
-    Assistent-7 ha fet una reserva. Places disponibles: 2
-    Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
-    Assistent-5 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
-    Assistent-1 ha fet una reserva. Places disponibles: 1
-    Assistent-3 ha fet una reserva. Places disponibles: 0
-    Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-8 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-2 ha fet una reserva. Places disponibles: 0
-    Assistent-0 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-8 ha fet una reserva. Places disponibles: 0
-    Assistent-9 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-3 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-2 ha fet una reserva. Places disponibles: 0
-    Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-1 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-8 ha fet una reserva. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-8 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-7 ha fet una reserva. Places disponibles: 0
-    Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-8 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-5 ha fet una reserva. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-7 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-9 ha fet una reserva. Places disponibles: 0
-    Assistent-2 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-2 ha cancel·lat una reserva. Places disponibles: 2
-    Assistent-6 ha fet una reserva. Places disponibles: 1
-    Assistent-6 ha fet una reserva. Places disponibles: 0
-    Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-7 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
-    Assistent-9 ha cancel·lat una reserva. Places disponibles: 2
-    Assistent-0 ha fet una reserva. Places disponibles: 1
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
-    Assistent-0 ha cancel·lat una reserva. Places disponibles: 2
-    Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
-    Assistent-8 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
-    Assistent-8 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
-    Assistent-5 ha fet una reserva. Places disponibles: 1
-    Assistent-2 no ha pogut cancel·la una reserva inexistent. Places disponibles: 1
-    Assistent-9 ha fet una reserva. Places disponibles: 0
-    Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-5 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-6 ha fet una reserva. Places disponibles: 0
-    Assistent-6 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-0 ha fet una reserva. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-8 ha fet una reserva. Places disponibles: 0
-    Assistent-5 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-4 ha fet una reserva. Places disponibles: 0
-    Assistent-4 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-1 ha fet una reserva. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-1 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-6 ha fet una reserva. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-6 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-8 ha fet una reserva. Places disponibles: 0
-    Assistent-6 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-2 ha fet una reserva. Places disponibles: 0
-    Assistent-6 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-7 ha fet una reserva. Places disponibles: 0
-    Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-7 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-1 ha fet una reserva. Places disponibles: 0
-    Assistent-1 ha cancel·lat una reserva. Places disponibles: 1
-    Assistent-8 ha fet una reserva. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
-    '''
+        private double chance = 0.7;
+        public void run() {
+            while (true) {
+                if (ferAlgo(chance)) { // si es mes de 70%
+                    try {
+                        esdeveniment.ferReserva(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else { // si es menys de 30%
+                    esdeveniment.cancelaReserva(this);
+                }
+                dormir();
+            }
+        }
+        '''
 
-    Conclució: En aquest cas com que era més probable que les reserves es cancelin que es reservin tarda molt més en aturar-se el flux. Per la mateixa raó.
+        Resultat:
+        '''
+        Assistent-0 ha fet una reserva. Places disponibles: 4
+        Assistent-9 no ha pogut cancel·la una reserva inexistent. Places disponibles: 4
+        Assistent-8 ha fet una reserva. Places disponibles: 3
+        Assistent-7 ha fet una reserva. Places disponibles: 2
+        Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
+        Assistent-5 no ha pogut cancel·la una reserva inexistent. Places disponibles: 2
+        Assistent-1 ha fet una reserva. Places disponibles: 1
+        Assistent-3 ha fet una reserva. Places disponibles: 0
+        Assistent-4 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-8 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-2 ha fet una reserva. Places disponibles: 0
+        Assistent-0 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-8 ha fet una reserva. Places disponibles: 0
+        Assistent-9 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-3 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-2 ha fet una reserva. Places disponibles: 0
+        ...
+        Assistent-3 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-7 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-1 ha fet una reserva. Places disponibles: 0
+        Assistent-1 ha cancel·lat una reserva. Places disponibles: 1
+        Assistent-8 ha fet una reserva. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-6 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-1 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        Assistent-0 no ha pogut cancel·la una reserva inexistent. Places disponibles: 0
+        '''
+
+    En aquest cas, totalment contrari a l'anterior, com que era més probable que les reserves es cancelin que es reservin tarda molt més en aturar-se el flux. 
 
 3. Perque fa falta la llista?
 
