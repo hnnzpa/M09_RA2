@@ -1,6 +1,7 @@
 ## Aquesta és la documentació de l'activitat 06 Wait i notifyAll()
 
 1. Per què s'atura l'execució al cap d'un temps?
+
     El motiu per el que l'execució s'atura es per la funció fer reserva. Aquesta en primer lloc és asyncronized, per lo que només un fill hi pot accedir i la resta s'ha d'esperar a que el primer termini. Com que hi han places limitats a reservar y la probabilitat de que un fill canceli és la mateixa un cop que ja no hi han places un fill sense plaça entra a reserva i s'espera fins a que hi hagi plaça. Altre fill que ja té plaça hi pot donarça que vulgui reserva plaça i per tant es produeix un bucle en el que cap dels dos poden surtir, un per que necesita que el que te plaça (darrere seu) cancel·li i l'altre esperant a que el primer reservi per poder "reservar" i que després amb una probabilitat del 50% li toqui cancel·la. 
 
     Doncs lo mateix que s'ha explicat amb dos fills passa amb molt fills. Un cop que un vol reservar i el que ha reservat no cancel·la perque espera a que un reservi i el que va després seu ja ha anat a cancel·la (pero per exemple no tenia reserva, per tant no ha aparegut una nova i el primer segueix en el wait()) es posa a la cua es forma un tancament del que ningú pot sortir. 
