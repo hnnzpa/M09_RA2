@@ -1,43 +1,51 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class Barberia {
+public class Barberia extends Thread{
 
     private List<Client> cua = new LinkedList<Client>();
     private Integer numCadires;
-    private Object condBarber = new Object();
+    public Object condBarber = new Object();
 
     public Barberia(Integer nCad){
         numCadires = nCad;
     }
 
-    public synchronized Client suguentClient(){
+    public synchronized Client seguentClient(){
         if (cua.isEmpty()){
+            System.out.println("Nungú a la espera");
             return null; 
         }else {
-            Client seguent = cua.getFirst();
-            cua.removeFirst();
-            return seguent;
+            System.out.println("Li toca al client " + cua.getFirst().getNom());
+            return cua.removeFirst();
         }
     }
 
-    public void entraClient(Client client){
-        if (cua.size() < numCadires){ // hi han cadires
+    public synchronized void entraClient(Client client){
+        if (cua.size() < numCadires){ 
             cua.addLast(client);
-            condBarber.notifyAll(); // condicio despertar barber
+            System.out.println("Client " + client.getNom() + " en espera.");
+            this.notifyAll(); 
+        }else {
+            System.out.println("No queden cadires, client " + client.getNom() + " se'n va.");
         }
     }
 
     public void entraDeu(){
         for (int i = 0; i < 10; i++) {
             entraClient(new Client(i));
+            try{
+                sleep(500);
+            }catch (Exception e){
+                e.getMessage();
+            }
         }
     }
 
     public void run(){
         entraDeu();
         try{
-            Thread.sleep(50);
+            sleep(10000); // esprem 10 segons per a que entrin els clients
         }catch (Exception e){
             e.getMessage();
         }
@@ -47,8 +55,8 @@ public class Barberia {
 
     public static void main(String[] args) {
         Barberia barberia = new Barberia(3);
-        Barber barber = new Barber("Mike");
+        Barber barber = new Barber("Mike", barberia);
         barber.start();
-        barberia
+        barberia.start();
     }
 }

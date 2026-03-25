@@ -1,4 +1,4 @@
-public class Client extends Thread{
+public class Client{
     String nom;
 
     public Client(Integer id){
